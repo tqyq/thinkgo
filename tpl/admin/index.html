@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>CMS Go管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="/admin/css/dpl-min.css" rel="stylesheet"
+	type="text/css" />
+<link href="/admin/css/bui-min.css" rel="stylesheet"
+	type="text/css" />
+<link href="/admin/css/main-min.css" rel="stylesheet"
+	type="text/css" />
+</head>
+<body>
+
+	<div class="header">
+		<div class="dl-title">
+			<span class="lp-title-port">CMS Go</span><span
+				class="dl-title-text">管理系统</span>
+		</div>
+
+		<div class="dl-log">
+			欢迎您，<span class="dl-log-user">admin</span><a href="/admin/logoff" title="退出系统"
+				class="dl-log-quit">[退出]</a>
+		</div>
+	</div>
+	<div class="content">
+		<div class="dl-main-nav">
+			<div class="dl-inform">
+				<div class="dl-inform-title">
+					贴心小秘书<s class="dl-inform-icon dl-up"></s>
+				</div>
+			</div>
+			<ul id="J_Nav" class="nav-list ks-clear">
+				<li class="nav-item dl-selected"><div
+						class="nav-item-inner nav-home">首页</div></li>
+				<!--         <li class="nav-item"><div class="nav-item-inner nav-order">表单页</div></li> -->
+				<!--         <li class="nav-item"><div class="nav-item-inner nav-inventory">搜索页</div></li> -->
+				<!--         <li class="nav-item"><div class="nav-item-inner nav-supplier">详情页</div></li> -->
+			</ul>
+		</div>
+		<ul id="J_NavContent" class="dl-tab-conten">
+
+		</ul>
+	</div>
+	<script type="text/javascript"
+		src="/admin/js/jquery-1.8.1.min.js"></script>
+	<script type="text/javascript" src="/admin/js/bui.js"></script>
+	<script type="text/javascript" src="/admin/js/config.js"></script>
+
+	<script>
+		BUI.use('common/main', function() {
+			var config = [ {
+				id : 'menu',
+				homePage : 'user',
+				menu : [ {
+					text : '系统配置',
+					items : [ {
+						id : 'settings',
+						text : '所有设置',
+						href : '/admin/settings',
+					}, {
+						id : 'mail_setting',
+						text : '邮件设置',
+						href : '/main/mail_setting'
+					} ]
+				}, {
+					text : '分类管理',
+					items : [ {
+						id : 'category',
+						text : '栏目管理',
+						href : '/main/category'
+					}, {
+						id : 'area',
+						text : '国家地区管理',
+						href : '/main/area'
+					} ]
+				}, {
+					text : '视频管理',
+					items : [ {
+						id : 'video_sort',
+						text : '视频分类管理',
+						href : '/admin/video_sort1'
+					}, {
+						id : 'video',
+						text : '视频管理',
+						href : '/main/video'
+					}, {
+						id : 'video_audit',
+						text : '视频审核',
+						href : '/main/video_audit'
+					} ]
+				}, {
+					text : '会员频道',
+					items : [ {
+						id : 'user_group',
+						text : '管理员账号管理',
+						href : '/admin/user_admin'
+					}, {
+						id : 'user',
+						text : '会员管理',
+						href : '/admin/user_list'
+					}]
+				} , {
+					text : '信息管理',
+					items : [ {
+						id : 'broad',
+						text : '网站公告',
+						href : 'main/broad'
+					}, {
+						id : 'word_filter',
+						text : '词语过滤',
+						href : 'main/word_filter'
+					} ]
+				}]
+			} ];
+			new PageUtil.MainPage({
+				modulesConfig : config
+			});
+		});
+	</script>
+</body>
+</html>
