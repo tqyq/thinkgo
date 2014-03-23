@@ -1,12 +1,21 @@
 package web
 
 import (
-	"net/http"
-	//	. "github.com/astaxie/beego"
+//	"net/http"
+		. "github.com/astaxie/beego"
 	. "labix.org/v2/mgo/bson"
 )
 
-func Req2M(r *http.Request) (*M) {
+type Util struct {
+Controller
+}
+
+func (this *Util) I(key string) string {
+	return this.GetString(key)
+}
+
+func (this *Util) F2m() (*M) {
+	r := this.Ctx.Request
 	r.ParseForm()
 	m := &M{}
 	for k, v := range r.Form {

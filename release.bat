@@ -1,4 +1,6 @@
-set MPATH=D:\baidu_sync\git\push_server\mpush_server
+set MPATH=D:\git\cms_go
 set GOPATH=%GOPATH%;%MPATH%
-go build -o bin\push_srv.exe src\main.go
-echo "done"
+cd %MPATH%
+go build -o bin\main.exe src\main.go
+bin\main.exe
+pause

@@ -19,13 +19,13 @@ const (
 
 var (
 	session      *mgo.Session
-	databaseName = AppConfig.String("dbname")
+	databaseName = "cms_go"
 )
 
 func Session() *mgo.Session {
 	if session == nil {
 		var err error
-		session, err = mgo.Dial(AppConfig.String("dbhost"))
+		session, err = mgo.Dial("localhost")
 		if err != nil {
 			panic(err) // no, not really
 		}
