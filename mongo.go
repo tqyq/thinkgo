@@ -3,8 +3,6 @@ package main
 import (
 	//	"fmt"
 	//	"io"
-	//	//	"kodec"
-	//	"client"
 	//	"net"
 	//	"os"
 	//	"reflect"
