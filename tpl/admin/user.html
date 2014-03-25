@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>会员管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="/admin/assets/css/dpl-min.css" rel="stylesheet"
+	type="text/css" />
+<link href="/admin/assets/css/bui-min.css" rel="stylesheet"
+	type="text/css" />
+<link href="/admin/assets/css/page-min.css" rel="stylesheet"
+	type="text/css" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="span4"></div>
+			<div class="span20"></div>
+		</div>
+		<div class="row">
+			<div class="span24">
+				<div id="grid"></div>
+			</div>
+		</div>
+	</div>
+	<div id="edit_dlg" class="hide">
+      <form class="form-horizontal">
+      	<input name="_id" type="hidden" />
+        <div class="row">
+          <div class="control-group span8">
+            <label class="control-label"><s>*</s>用户名：</label>
+            <div class="controls">
+              <input name="name" type="text" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="control-group span8">
+            <label class="control-label"><s>*</s>密码：</label>
+            <div class="controls">
+              <input id="password" name="password" type="text" class="input-normal control-text">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="control-group span8 ">
+            <label class="control-label">邮箱：</label>
+            <div id="range" class="controls">
+              <input name="email" class="input-normal control-text" data-rules="{email:true}" type="text">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="control-group span8 ">
+            <label class="control-label">注册日期：</label>
+            <div id="range" class="controls">
+              <input name="reg" class="calendar" data-rules="{date:true}" type="text">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="control-group span8 ">
+            <label class="control-label">角色：</label>
+              <select id="role" name="role" style="margin-left: 10px;">
+				    <option value="2" selected="selected">普通会员</option>
+			        <option value="3" >付费会员</option>
+			  </select>
+           </div>
+         </div>
+      </form>
+    </div>
+	<script type="text/javascript"
+		src="/admin/assets/js/jquery-1.8.1.min.js"></script>
+	<script type="text/javascript" src="/admin/assets/js/bui-min.js"></script>
+	<script type="text/javascript" src="/admin/assets/js/config-min.js"></script>
+	<script type="text/javascript" src="/admin/assets/js/common.js"></script>
+	<script type="text/javascript">
+		BUI.use([ 'bui/grid', 'bui/data' ], function(Grid, Data) {
+			var Grid = Grid, Store = Data.Store, columns = [ {
+				title : '用户名',
+				dataIndex : 'name',
+				width : '20%'
+			}, {
+				title : '邮件地址',
+				dataIndex : 'email',
+				width : '15%'
+			}, {
+				title : '注册时间',
+				dataIndex : 'reg',
+				width : '15%',
+				renderer : Grid.Format.dateRenderer
+			}, {
+	            title : '操作', renderer: function(val,obj) {
+	          	  return '<span class="grid-command btn-edit">编辑</span>';
+	            }
+	        } ];
+			var editing = new Grid.Plugins.DialogEditing({
+	            contentId : 'edit_dlg',
+	            triggerCls : 'btn-edit',
+	            editor : {
+	              title : '编辑',
+	              listeners : {
+	                show : function() {
+	                	var form = this.get('form');
+	                },
+	                accept : function() {
+	                	var data = this.get('form').serializeToObject();
+	                	var url = data._id ? '/user/update' : '/user/add';
+	                	if(data._id == "" && $("#password").val() == "") {
+	                		//添加用户
+	                		alert('请输入密码');
+	                	}
+	                	$.post(url, data, function(r) {
+	                  		console.log(r);
+	                  	}, 'json');
+	                }
+	              }
+	            }
+	        });
+
+			var store = new Store({
+				url : '/user/list',
+				autoLoad : true,
+				autoSync: true,
+				params : {},
+				pageSize : 10
+			});
+			var grid = new Grid.Grid({
+				render : '#grid',
+				columns : columns,
+				idField : '_id',
+				loadMask : true,
+				store : store,
+				plugins : [editing, Grid.Plugins.CheckSelection],
+				tbar:{
+	                items : [{
+	                  btnCls : 'button button-small',
+	                  text : '<i class="icon-plus"></i>添加',
+	                  listeners : {
+	                	  click : function() {
+	                        editing.add({});
+	                      }
+	                  }
+	                },
+	                {
+	                  btnCls : 'button button-small',
+	                  text : '<i class="icon-remove"></i>删除',
+	                  listeners : {
+	                	  click : function() {
+	                		  BUI.Message.Confirm('确认要删除所选项？', function() {
+	                			  var selections = grid.getSelection();
+			                      var ids = [];
+			                      for (var i = 0; i < selections.length; i++) {
+			                      	ids[i] = selections[i]._id;
+			                      }
+			                      $.post('/user/del', {ids : ids}, function(r) {
+				                  		console.log(r);
+				                  		store.load();
+				                  	}, 'json');
+	                	      },'question');
+	                    }
+	                  }
+	                }]
+	            },
+				bbar : {
+					pagingBar : true
+				}
+			});
+
+			grid.render();
+		});
+		
+	</script>
+<body>
+</html>

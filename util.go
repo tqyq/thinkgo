@@ -4,14 +4,21 @@ import (
 	//	"net/http"
 	. "github.com/astaxie/beego"
 	. "labix.org/v2/mgo/bson"
+	"strconv"
 )
 
 type Util struct {
 	Controller
 }
 
-func (this *Util) I(key string) string {
-	return this.GetString(key)
+func (this *Util) I(key string) interface{} {
+	v := this.GetString(key)
+	i, err := strconv.Atoi(v)
+	if err != nil {
+		return v
+	} else {
+		return i
+	}
 }
 
 func (this *Util) F2m() *M {
@@ -26,4 +33,12 @@ func (this *Util) F2m() *M {
 		}
 	}
 	return m
+}
+
+func (this *Util) JsonOk(msg ...interface{}) {
+	if msg == nil {
+		msg = []interface{}{"ok"}
+	}
+	this.Data["json"] = M{"success": true, "msg": msg[0]}
+	this.ServeJson()
 }
