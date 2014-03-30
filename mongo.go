@@ -20,6 +20,19 @@ var (
 	databaseName = "cms_go"
 )
 
+//type C struct {
+//	mgo.Session
+//}
+//
+//func (this *C) C(coll string) *mgo.Session {
+//
+//}
+
+func Db(collection string) *mgo.Collection {
+	session := Session()
+	return session.DB(databaseName).C(collection)
+}
+
 func Session() *mgo.Session {
 	if session == nil {
 		var err error

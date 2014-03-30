@@ -1,7 +1,7 @@
 package main
 
 import (
-	//	"net/http"
+	"fmt"
 	. "github.com/astaxie/beego"
 	. "labix.org/v2/mgo/bson"
 	"strconv"
@@ -41,4 +41,12 @@ func (this *Util) JsonOk(msg ...interface{}) {
 	}
 	this.Data["json"] = M{"success": true, "msg": msg[0]}
 	this.ServeJson()
+}
+
+func (this *Util) Echo(msg ...interface{}) {
+	var out string = ""
+	for _, v := range msg {
+		out += fmt.Sprintf("%v", v)
+	}
+	this.Ctx.WriteString(out)
 }

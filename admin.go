@@ -13,7 +13,7 @@ func (this *AdminController) init() {
 }
 
 func (this *AdminController) Prepare() {
-	Info("Prepare")
+	Info("Prepare admin")
 }
 
 func (this *AdminController) Get() {

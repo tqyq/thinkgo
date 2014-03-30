@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var controllers []ControllerInterface = []ControllerInterface{&AdminController{}, &UserController{}}
+var controllers []ControllerInterface = []ControllerInterface{&IndexController{}, &AdminController{}, &UserController{}}
 
 func init() {
 	AppConfigPath = "conf/app.conf"
