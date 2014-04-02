@@ -1,7 +1,7 @@
 (function ($) {
 
   var baseUrl = '',         //网站的根目录地址，发布到线上时使用
-    jsBase = '/assets/js';
+    jsBase = '/admin/js';
   
   function isRelative(url){
     if(!/:/.test(url)){

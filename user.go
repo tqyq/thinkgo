@@ -6,21 +6,13 @@ import (
 	. "labix.org/v2/mgo/bson"
 )
 
-type UserController struct {
-	Util
-}
-
-func (this *UserController) Prepare() {
-}
-
-func (this *UserController) List() {
+func (this *Action) UserList() {
 	start := this.I("start").(int)
 	limit := this.I("limit").(int)
 	var count int = 0
 	Mgo(USER, func(c *mgo.Collection) {
 		count, _ = c.Find(M{}).Skip(start).Limit(limit).Count()
 	})
-	Db(USER).Find(nil).Skip(start).Limit(limit).Count()
 	var ms = []M{}
 	Mgo(USER, func(c *mgo.Collection) {
 		c.Find(M{}).Skip(start).Limit(limit).All(&ms)
@@ -29,19 +21,19 @@ func (this *UserController) List() {
 	this.ServeJson()
 }
 
-func (this *UserController) Add() {
+func (this *Action) UserAdd() {
 	m := this.F2m()
 	Info("m=", *m)
 	Mgo(USER, func(c *mgo.Collection) {
 		c.Insert(m)
 	})
-	Db(USER).Insert(m)
 	this.JsonOk()
 }
 
-func (this *UserController) Update() {
+func (this *Action) UserUpdate() {
+	this.Echo("UserUpdate")
 }
 
-func (this *UserController) Del() {
-	//this.JsonOk()
+func (this *Action) UserDel() {
+	this.Echo("UserDel")
 }

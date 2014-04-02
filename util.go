@@ -5,6 +5,9 @@ import (
 	. "github.com/astaxie/beego"
 	. "labix.org/v2/mgo/bson"
 	"strconv"
+	"reflect"
+	"regexp"
+	"strings"
 )
 
 type Util struct {
@@ -49,4 +52,19 @@ func (this *Util) Echo(msg ...interface{}) {
 		out += fmt.Sprintf("%v", v)
 	}
 	this.Ctx.WriteString(out)
+}
+
+func AutoRoute(controllers ...ControllerInterface) {
+	for _, c := range controllers {
+		reg, err := regexp.Compile(`.*\.(\w+)Controller`)
+		if err != nil {
+			Info(err)
+		} else {
+			match := reg.FindStringSubmatch(reflect.TypeOf(c).String())
+			if len(match) > 1 {
+				Router("/"+strings.ToLower(match[1])+"/", c)
+			}
+		}
+		AutoRouter(c)
+	}
 }
