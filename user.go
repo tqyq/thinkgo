@@ -15,10 +15,9 @@ func (this *Action) UserList() {
 	})
 	var ms = []M{}
 	Mgo(USER, func(c *mgo.Collection) {
-		c.Find(M{}).Skip(start).Limit(limit).All(&ms)
+		c.Find(nil).Skip(start).Limit(limit).All(&ms)
 	})
-	this.Data["json"] = M{"rows": &ms, "results": count}
-	this.ServeJson()
+	this.EchoJson(&M{"rows": &ms, "results": count})
 }
 
 func (this *Action) UserAdd() {

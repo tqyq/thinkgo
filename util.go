@@ -54,6 +54,11 @@ func (this *Util) Echo(msg ...interface{}) {
 	this.Ctx.WriteString(out)
 }
 
+func (this *Util) EchoJson(m *M) {
+	this.Data["json"] = m
+	this.ServeJson()
+}
+
 func AutoRoute(controllers ...ControllerInterface) {
 	for _, c := range controllers {
 		reg, err := regexp.Compile(`.*\.(\w+)Controller`)
