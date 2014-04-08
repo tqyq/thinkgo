@@ -17,6 +17,6 @@ func init() {
 }
 
 func main() {
-	Router("/*", &Action{})
+	Router("/*", &Action{}, "*:Get")
 	Run()
 }

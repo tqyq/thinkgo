@@ -34,5 +34,11 @@ func (this *Action) UserUpdate() {
 }
 
 func (this *Action) UserDel() {
-	this.Echo("UserDel")
+	ids := this.GetStrings("ids[]")
+	for _, v := range ids {
+		Mgo(USER, func(c *mgo.Collection) {
+			c.Remove(M{"_id": ObjectIdHex(v)})
+		})
+	}
+	this.JsonOk()
 }
