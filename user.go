@@ -7,17 +7,18 @@ import (
 )
 
 func (this *Action) UserList() {
-	start := this.I("start").(int)
-	limit := this.I("limit").(int)
-	var count int = 0
+	page := this.I("page").(int)
+	rows := this.I("rows").(int)
+	start := (page -1) * rows
+	var total int = 0
 	Mgo(USER, func(c *mgo.Collection) {
-		count, _ = c.Find(M{}).Skip(start).Limit(limit).Count()
+		total, _ = c.Find(M{}).Skip(start).Limit(rows).Count()
 	})
 	var ms = []M{}
 	Mgo(USER, func(c *mgo.Collection) {
-		c.Find(nil).Skip(start).Limit(limit).All(&ms)
+		c.Find(nil).Skip(start).Limit(rows).All(&ms)
 	})
-	this.EchoJson(&M{"rows": &ms, "results": count})
+	this.EchoJson(&M{"total": total, "rows": &ms})
 }
 
 func (this *Action) UserAdd() {
@@ -26,7 +27,7 @@ func (this *Action) UserAdd() {
 	Mgo(USER, func(c *mgo.Collection) {
 		c.Insert(m)
 	})
-	this.JsonOk()
+	this.EchoJsonOk()
 }
 
 func (this *Action) UserUpdate() {
@@ -40,5 +41,5 @@ func (this *Action) UserDel() {
 			c.Remove(M{"_id": ObjectIdHex(v)})
 		})
 	}
-	this.JsonOk()
+	this.EchoJsonOk()
 }

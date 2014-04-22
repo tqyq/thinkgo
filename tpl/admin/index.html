@@ -1,122 +1,103 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>CMS Go管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="/admin/css/dpl-min.css" rel="stylesheet"
-	type="text/css" />
-<link href="/admin/css/bui-min.css" rel="stylesheet"
-	type="text/css" />
-<link href="/admin/css/main-min.css" rel="stylesheet"
-	type="text/css" />
+<title>XXX管理</title>
+<link rel="stylesheet" href="/admin/css/reset.css" type="text/css"
+	media="screen" />
+<link rel="stylesheet" href="/admin/css/style.css" type="text/css"
+	media="screen" />
+<link rel="stylesheet" href="/admin/css/invalid.css" type="text/css"
+	media="screen" />
+<link rel="stylesheet" href="/admin/css/index.css" type="text/css"
+	media="screen" />
+
+<script type="text/javascript" src="/admin/js/jquery-1.7.min.js"></script>
+<style type="text/css"></style>
+
+<script type="text/javascript"
+	src="/admin/js/simpla.jquery.configuration.js"></script>
+<script type="text/javascript" src="/admin/js/facebox.js"></script>
+<script type="text/javascript" src="/admin/js/jquery.wysiwyg.js"></script>
+<script>
+	$(function() {
+		$("#users").trigger("click");
+	});
+</script>
 </head>
 <body>
+	<div id="body-wrapper">
+		<div id="sidebar">
+			<div id="sidebar-wrapper">
+				<h1 id="sidebar-title">
+					<a href="javascript:;">XXX管理</a>
+				</h1>
+				<a href="javascript:;"><img id="logo" src="/admin/img/logo.png" /></a>
+				<div id="profile-links">
+					你好, <a href="javascript:;" title="Edit your profile">Admin</a><br />
+					<br />
+					<a href="/admin/logoff" title="退出">退出</a>
+				</div>
 
-	<div class="header">
-		<div class="dl-title">
-			<span class="lp-title-port">CMS Go</span><span
-				class="dl-title-text">管理系统</span>
-		</div>
+				<ul id="main-nav">
 
-		<div class="dl-log">
-			欢迎您，<span class="dl-log-user">admin</span><a href="/admin/logoff" title="退出系统"
-				class="dl-log-quit">[退出]</a>
+					<li id="district_list"><a href="javascript:;"
+						class="nav-top-item current" style="padding-right: 15px;">基础数据</a>
+						<ul>
+							<li><a href="javascript:;" url="/admin/users"
+								id="users">用户列表</a></li>
+						</ul></li>
+
+				</ul>
+				<!-- End #main-nav -->
+
+			</div>
 		</div>
-	</div>
-	<div class="content">
-		<div class="dl-main-nav">
-			<div class="dl-inform">
-				<div class="dl-inform-title">
-					贴心小秘书<s class="dl-inform-icon dl-up"></s>
+		<!-- End #sidebar -->
+
+		<div id="main-content">
+			<!-- Main Content Section with everything -->
+
+			<!-- Page Head -->
+<!-- 			<h3>XXX管理</h3> -->
+
+			<div class="clear"></div>
+			<!-- End .clear -->
+
+			<div class="content-box">
+				<!-- Start Content Box -->
+
+				<div class="content-box-header">
+
+					<h3 style="cursor: s-resize;" id="right_title">管理中心</h3>
+
+					<div class="clear"></div>
+
+				</div>
+				<!-- End .content-box-header -->
+				<div class="demo-c">
+					<iframe id="cc" frameborder="0" scrolling="auto"
+						style="width:100%;height:550px"></iframe>
 				</div>
 			</div>
-			<ul id="J_Nav" class="nav-list ks-clear">
-				<li class="nav-item dl-selected"><div
-						class="nav-item-inner nav-home">首页</div></li>
-				<!--         <li class="nav-item"><div class="nav-item-inner nav-order">表单页</div></li> -->
-				<!--         <li class="nav-item"><div class="nav-item-inner nav-inventory">搜索页</div></li> -->
-				<!--         <li class="nav-item"><div class="nav-item-inner nav-supplier">详情页</div></li> -->
-			</ul>
+			<!-- End .content-box -->
+
+			<div class="clear"></div>
+
+			<div id="footer">
+
+				<small> <!-- Remove this notice or replace it with whatever you want -->
+					© Copyright 2014 Mrocker(Beijing) Co,ltd | Powered by <a href="www.mrocker.com">Mrocker</a>
+					| <a href="#">Top</a>
+				</small>
+			</div>
+			<!-- End #footer -->
+
 		</div>
-		<ul id="J_NavContent" class="dl-tab-conten">
+		<!-- End #main-content -->
 
-		</ul>
 	</div>
-	<script type="text/javascript"
-		src="/admin/js/jquery-1.8.1.min.js"></script>
-	<script type="text/javascript" src="/admin/js/bui.js"></script>
-	<script type="text/javascript" src="/admin/js/config.js"></script>
 
-	<script>
-		BUI.use('common/main', function() {
-			var config = [ {
-				id : 'menu',
-				homePage : 'user',
-				menu : [ {
-					text : '系统配置',
-					items : [ {
-						id : 'settings',
-						text : '所有设置',
-						href : '/admin/settings',
-					}, {
-						id : 'mail_setting',
-						text : '邮件设置',
-						href : '/main/mail_setting'
-					} ]
-				}, {
-					text : '分类管理',
-					items : [ {
-						id : 'category',
-						text : '栏目管理',
-						href : '/main/category'
-					}, {
-						id : 'area',
-						text : '国家地区管理',
-						href : '/main/area'
-					} ]
-				}, {
-					text : '视频管理',
-					items : [ {
-						id : 'video_sort',
-						text : '视频分类管理',
-						href : '/admin/video_sort1'
-					}, {
-						id : 'video',
-						text : '视频管理',
-						href : '/main/video'
-					}, {
-						id : 'video_audit',
-						text : '视频审核',
-						href : '/main/video_audit'
-					} ]
-				}, {
-					text : '会员频道',
-					items : [ {
-						id : 'user_group',
-						text : '管理员账号管理',
-						href : '/admin/user_admin'
-					}, {
-						id : 'user',
-						text : '会员管理',
-						href : '/admin/users'
-					}]
-				} , {
-					text : '信息管理',
-					items : [ {
-						id : 'broad',
-						text : '网站公告',
-						href : 'main/broad'
-					}, {
-						id : 'word_filter',
-						text : '词语过滤',
-						href : 'main/word_filter'
-					} ]
-				}]
-			} ];
-			new PageUtil.MainPage({
-				modulesConfig : config
-			});
-		});
-	</script>
 </body>
 </html>

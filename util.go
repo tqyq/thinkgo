@@ -38,7 +38,7 @@ func (this *Util) F2m() *M {
 	return m
 }
 
-func (this *Util) JsonOk(msg ...interface{}) {
+func (this *Util) EchoJsonOk(msg ...interface{}) {
 	if msg == nil {
 		msg = []interface{}{"ok"}
 	}

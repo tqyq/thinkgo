@@ -10,12 +10,12 @@ html {
 body {
                 font-family: Arial, Helvetica, sans-serif;
                 color: #555;
-                background: #f0f0f0 url('../images/bg-body.gif') top left repeat-y;
+                background: #f0f0f0 url('../img/bg-body.gif') top left repeat-y;
                 font-size: 12px;
                 }
 
 #body-wrapper {
-                background: url('../images/bg-radial-gradient.gif') fixed 230px top no-repeat;
+                background: url('../img/bg-radial-gradient.gif') fixed 230px top no-repeat;
                 }                
 
 /********************************      Elements styling      ********************************/
@@ -71,7 +71,7 @@ p {
 .button {
 				font-family: Verdana, Arial, sans-serif;
                 display: inline-block;
-                background: #459300 url('../images/bg-button-green.gif') top left repeat-x !important;
+                background: #459300 url('../img/bg-button-green.gif') top left repeat-x !important;
                 border: 1px solid #459300 !important;
                 padding: 4px 7px 4px 7px !important;
                 color: #fff !important;
@@ -98,7 +98,7 @@ a.remove-link:hover {
 /********************************      Sidebar      ********************************/
 
 #sidebar {
-                background: url('../images/bg-sidebar.gif') top left no-repeat;
+                background: url('../img/bg-sidebar.gif') top left no-repeat;
                 width: 230px;
                 height: 100%;
                 position: absolute;
@@ -152,7 +152,7 @@ a.remove-link:hover {
                 }
 
 #sidebar #main-nav li a.nav-top-item {
-                background: transparent url('../images/bg-menu-item-green.gif') right center no-repeat; /* Background image for default color scheme - green */
+                background: transparent url('../img/bg-menu-item-green.gif') right center no-repeat; /* Background image for default color scheme - green */
                 padding: 10px 15px;
                 color: #fff;
                 font-size: 14px;
@@ -162,7 +162,7 @@ a.remove-link:hover {
                 }
 
 #sidebar #main-nav li a.current {
-                background-image: url('../images/bg-menu-item-current.gif') !important;
+                background-image: url('../img/bg-menu-item-current.gif') !important;
                 color: #333;
                 font-weight: bold;
                 }
@@ -199,7 +199,7 @@ a.remove-link:hover {
                 }
 
 #sidebar #main-nav ul li a.current {
-                background: transparent url('../images/menu-current-arrow.gif') right center no-repeat !important;
+                background: transparent url('../img/menu-current-arrow.gif') right center no-repeat !important;
                 }
 
 
@@ -263,7 +263,7 @@ a.remove-link:hover {
 /* Unordered List */
 
 #main-content ul li {
-                background: url('../images/icons/bullet_black.png') center left no-repeat;
+                background: url('../img/icons/bullet_black.png') center left no-repeat;
                 padding: 4px 0 4px 20px;
                 }
 
@@ -287,7 +287,7 @@ a.remove-link:hover {
                 }
 
 .content-box-header {
-                background: #e5e5e5 url('../images/bg-content-box.gif') top left repeat-x;
+                background: #e5e5e5 url('../img/bg-content-box.gif') top left repeat-x;
                 margin-top: 1px;
                 height: 40px;
                 }
@@ -393,7 +393,7 @@ ul.content-box-tabs li a.current {
                 }
 
 .pagination a.current {
-                background: #469400 url('../images/bg-button-green.gif') top left repeat-x !important;
+                background: #469400 url('../img/bg-button-green.gif') top left repeat-x !important;
                 border-color: #459300 !important;
                 color: #fff !important;
                 }
@@ -406,7 +406,7 @@ ul.content-box-tabs li a.current {
 
 .shortcut-button {
                 border: 1px solid #ccc;
-                background: #f7f7f7 url('../images/shortcut-button-bg.gif') top left no-repeat;
+                background: #f7f7f7 url('../img/shortcut-button-bg.gif') top left no-repeat;
                 display: block;
                 width: 120px;
                 margin: 0 0 20px 0;
@@ -468,7 +468,7 @@ form textarea,
 form .wysiwyg {
                 padding: 6px;
                 font-size: 13px;
-                background: #fff url('../images/bg-form-field.gif') top left repeat-x;
+                background: #fff url('../img/bg-form-field.gif') top left repeat-x;
                 border: 1px solid #d5d5d5;
 				color: #333;
                 }
@@ -519,25 +519,25 @@ form input[type="radio"] {
                 
 
 .attention {
-                background: #fffbcc url('../images/icons/exclamation.png') 10px 11px no-repeat;
+                background: #fffbcc url('../img/icons/exclamation.png') 10px 11px no-repeat;
                 border-color: #e6db55;
                 color: #666452;
                 }
 
 .information {
-                background: #dbe3ff url('../images/icons/information.png');
+                background: #dbe3ff url('../img/icons/information.png');
                 border-color: #a2b4ee;
                 color: #585b66;
                 }
 
 .success {
-                background: #d5ffce url('../images/icons/tick_circle.png');
+                background: #d5ffce url('../img/icons/tick_circle.png');
                 border-color: #9adf8f;
                 color: #556652;
                 }
 
 .error {
-                background: #ffcece url('../images/icons/cross_circle.png');
+                background: #ffcece url('../img/icons/cross_circle.png');
                 border-color: #df8f8f;
                 color: #665252;
                 }
@@ -582,6 +582,10 @@ body#login {
                 background: #222 url('../img/bg-login.gif');
 				}
 				
+#login-wrapper {
+                background: url('../img/bg-login-top.png') top left repeat-x;
+				}
+
 #login-wrapper #login-top {
 				width: 100%;
 				padding: 50px 0 100px 0;
@@ -638,23 +642,23 @@ body#login {
 /*************** Facebox ***************/
 
 #facebox .b {
-  background:url(../images/b.png);
+  background:url(../img/b.png);
 }
 
 #facebox .tl {
-  background:url(../images/tl.png);
+  background:url(../img/tl.png);
 }
 
 #facebox .tr {
-  background:url(../images/tr.png);
+  background:url(../img/tr.png);
 }
 
 #facebox .bl {
-  background:url(../images/bl.png);
+  background:url(../img/bl.png);
 }
 
 #facebox .br {
-  background:url(../images/br.png);
+  background:url(../img/br.png);
 }
 
 #facebox {
@@ -736,7 +740,7 @@ div.wysiwyg * { margin: 0; padding: 0; }
 div.wysiwyg ul.panel { border-bottom: 1px solid #cccccc; float: left; width: 100%; padding: 0 0 5px 0; }
 div.wysiwyg ul.panel li { list-style-type: none; float: left; margin: 0 2px; padding: 0 !important;  background: #ffffff; background-image: none !important;}
 div.wysiwyg ul.panel li.separator { height: 16px; margin: 0 4px; border-left: 1px solid #cccccc; }
-div.wysiwyg ul.panel li a { display: block; padding: 0 !important; width: 16px; height: 16px; background: url('../images/icons/jquery.wysiwyg.gif') no-repeat -64px -80px; border: 0; cursor: pointer; padding: 1px; }
+div.wysiwyg ul.panel li a { display: block; padding: 0 !important; width: 16px; height: 16px; background: url('../img/icons/jquery.wysiwyg.gif') no-repeat -64px -80px; border: 0; cursor: pointer; padding: 1px; }
 div.wysiwyg ul.panel li a:hover, div.wysiwyg ul.panel li a.active {  }
 div.wysiwyg ul.panel li a.active { background-color: #f9f9f9; border: 1px solid #cccccc; border-left-color: #aaaaaa; border-top-color: #aaaaaa; padding: 0; }
 

@@ -2,41 +2,39 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>WeiqiTV管理</title>
-    <link rel="stylesheet" type="text/css" href="/admin/css/easyui.css">
-    <link rel="stylesheet" type="text/css" href="/admin/css/icon.css">
-    <link rel="stylesheet" type="text/css" href="/admin/css/jquery.multiselect.css">
-    <link rel="stylesheet" type="text/css" href="/admin/css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="/Public/admin/css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/Public/admin/css/icon.css">
+    <link rel="stylesheet" type="text/css" href="/Public/admin/css/jquery.multiselect.css">
+    <link rel="stylesheet" type="text/css" href="/Public/admin/css/jquery-ui.css">
 
-    <script type="text/javascript" src="/admin/js/jquery-1.7.min.js"></script>
-    <script type="text/javascript" src="/admin/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/admin/js/jquery.multiselect.js"></script>
-    <script type="text/javascript" src="/admin/js/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="/admin/js/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="/admin/js/common.js"></script>
-    <script type="text/javascript" src="/admin/js/ajaxupload.js"></script>
+    <script type="text/javascript" src="/Public/admin/js/jquery-1.7.min.js"></script>
+    <script type="text/javascript" src="/Public/admin/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Public/admin/js/jquery.multiselect.js"></script>
+    <script type="text/javascript" src="/Public/admin/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/Public/admin/js/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/Public/admin/js/common.js"></script>
+    <script type="text/javascript" src="/Public/admin/js/ajaxupload.js"></script>
 </head>
 <body>
-<table id="dg" title="用户列表" class="easyui-datagrid"
-	   url="/user/list"
+<table id="dg" title="图片列表" class="easyui-datagrid"
+	   url="/img/imgs"
        toolbar="#toolbar"
        pagination="true"
        rownumbers="true"
-       idField="_id"
+       idField="id"
        fitColumns="true">
     <thead>
     <tr>
         <th field="ck" checkbox="true"></th>
-        <th field="name" width="20">用户名</th>
-        <th field="reg" width="20">注册时间</th>
-        <th field="img" width="20">图片</th>
+        <th field="name" width="20">图片</th>
     </tr>
     </thead>
 </table>
 
 <div id="toolbar">
-	<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新增</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="delUser()">删除</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newImg()">新增</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editImg()">编辑</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeImg()">删除</a>
 </div>
 	
 
@@ -46,26 +44,19 @@
         <input type="hidden" name="id" />
         <input id="name" name="name" type="hidden">
         <div class="fitem">
-            <label>用户名:</label>
-            <input type="text" name="name" id="name" value="" class="easyui-validatebox" required="true">
-        </div>
-        <div class="fitem">
-            <label>注册时间:</label>
-            <input type="text" name="reg" id="reg" value="" class="easyui-validatebox" required="true">
-        </div>
-        <div class="fitem">
             <span id="img_upload_show" style="color:red;margin-left:60px;"></span><br/>
-            <label>用户:</label>
-            <input type="text" name="img" id="img" value="" class="easyui-validatebox" required="true">
-            <input id="img_upload" type="button" value="添加用户" />
+                <label>图片:</label>
+                <input type="text" name="img" id="img" value="" class="easyui-validatebox" required="true">
+                <input id="img_upload" type="button" value="添加图片" />
         </div>
     </form>
 </div>
 
 <div id="dlg-buttons">
-    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">保存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveImg()">保存</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
 </div>
+
 
 <script type="text/javascript">
 	$(function() {
@@ -78,7 +69,7 @@
             onChange: function(file, extension) {},
             onSubmit: function(file, extension) {
                 if (extension != "jpg" && extension != "png") {
-                    alert("只能上传.jpg或.png格式的用户");
+                    alert("只能上传.jpg或.png格式的图片");
                     return false;
                 }
                 var row = $('#dg').datagrid('getSelections');
@@ -92,21 +83,22 @@
         });
 	});
     var url;
-    function newUser(){
+    function newImg(){
         $('#dlg').dialog('open').dialog('setTitle','新增');
         $('#fm').form('clear');
-        url = '/user/add';
+        $('#province').val('{$province}');
+        url = '/img/img_add';
     }
-    function editUser(){
+    function editImg(){
         var row = $('#dg').datagrid('getSelected');
         if (row){
             var selectNode = new Array();
             $('#dlg').dialog('open').dialog('setTitle','编辑');
             $('#fm').form('load',row);
-            url = '/user/update';
+            url = '/img/img_update';
         }
     }
-    function saveUser(){
+    function saveImg(){
         $('#fm').form('submit',{
             url: url,
             onSubmit: function(){
@@ -126,16 +118,16 @@
             }
         });
     }
-    function delUser(){
+    function removeImg(){
         var row = $('#dg').datagrid('getSelections');
         if (row){
-            $.messager.confirm('提示','你确定要删除此用户吗?',function(r){
+            $.messager.confirm('提示','你确定要删除此图片吗?',function(r){
                 if (r){
                     var ids = [];
                     for(var i=0;i<row.length;i++){
                         ids[i] = row[i].id;
                     }
-                    $.post("/user/del", {"ids":ids}, function(r) {
+                    $.post("/img/img_remove", {"ids":ids}, function(r) {
                     	$('#dg').datagrid('reload');
                         $('#dg').datagrid('clearSelections');
                     }, 'json');
@@ -144,5 +136,6 @@
         }
     }
 </script>
+
 </body>
 </html>
