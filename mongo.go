@@ -42,3 +42,22 @@ func Mgo(collection string, f func(*mgo.Collection)) {
 	c := session.DB(databaseName).C(collection)
 	f(c)
 }
+
+type MongoModel struct {
+	Cname string
+}
+
+type MongoDb struct {
+}
+
+func (*MongoDb) D(name string) (m *MongoModel) {
+	return &MongoModel{Cname:name}
+}
+
+func (*MongoModel) Find() (m *MongoModel) {
+	return m
+}
+
+func (*MongoModel) Count() (int64, error) {
+	return 0, nil
+}

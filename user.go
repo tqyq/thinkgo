@@ -6,6 +6,13 @@ import (
 	. "labix.org/v2/mgo/bson"
 )
 
+func (this *Action) Index() {
+	this.D(USER).Find().Count()
+	this.Data["Content"] = "index ..."
+	this.Data["Content2"] = "nav ..."
+	this.TplNames = "index/index.html"
+}
+
 func (this *Action) UserList() {
 	page := this.I("page").(int)
 	rows := this.I("rows").(int)
