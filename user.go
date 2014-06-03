@@ -16,7 +16,7 @@ func (this *Action) Index() {
 func (this *Action) UserList() {
 	page := this.I("page").(int)
 	rows := this.I("rows").(int)
-	start := (page -1) * rows
+	start := (page - 1) * rows
 	var total int = 0
 	Mgo(USER, func(c *mgo.Collection) {
 		total, _ = c.Find(M{}).Skip(start).Limit(rows).Count()

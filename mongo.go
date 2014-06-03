@@ -51,7 +51,7 @@ type MongoDb struct {
 }
 
 func (*MongoDb) D(name string) (m *MongoModel) {
-	return &MongoModel{Cname:name}
+	return &MongoModel{Cname: name}
 }
 
 func (*MongoModel) Find() (m *MongoModel) {

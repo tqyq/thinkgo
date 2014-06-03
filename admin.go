@@ -7,4 +7,3 @@ import (
 func (this *Action) BeforeAdmin() {
 	Info("Call Before Admin")
 }
-
