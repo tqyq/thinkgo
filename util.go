@@ -54,7 +54,7 @@ func (this *Util) Echo(msg ...interface{}) {
 	this.Ctx.WriteString(out)
 }
 
-func (this *Util) EchoJson(m *M) {
+func (this *Util) EchoJson(m interface{}) {
 	this.Data["json"] = m
 	this.ServeJson()
 }
