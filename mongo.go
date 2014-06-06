@@ -1,7 +1,6 @@
 package main
 
 import (
-	//	"fmt"
 	//	"io"
 	//	"net"
 	//	"os"
@@ -71,15 +70,17 @@ func (m *MongoModel) Limit(rows int) *MongoModel {
 	return m
 }
 
-func (m *MongoModel) All(result interface{}) {
+func (m *MongoModel) All() *[]P {
+	ps := []P{}
 	Mgo(m.Cname, func(c *mgo.Collection) {
 		q := m.query(c)
-		q.All(&result)
+		q.All(&ps)
 	})
+	return &ps
 }
 
 func (m *MongoModel) Count() int {
-	var total int = 0
+	total := 0
 	Mgo(m.Cname, func(c *mgo.Collection) {
 		q := m.query(c)
 		total, _ = q.Count()

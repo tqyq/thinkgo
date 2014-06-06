@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	. "github.com/astaxie/beego"
-	. "labix.org/v2/mgo/bson"
 	"reflect"
 	"regexp"
 	"strconv"
@@ -24,13 +23,15 @@ func (this *Util) I(key string) interface{} {
 	}
 }
 
-func (this *Util) F2m() *M {
+func (this *Util) F2m() *P {
 	r := this.Ctx.Request
 	r.ParseForm()
-	m := &M{}
+	m := &P{}
 	for k, v := range r.Form {
 		if len(v) == 1 {
-			(*m)[k] = v[0]
+			if len(v[0]) > 0 {
+				(*m)[k] = v[0]
+			}
 		} else {
 			(*m)[k] = v
 		}
@@ -42,7 +43,7 @@ func (this *Util) EchoJsonOk(msg ...interface{}) {
 	if msg == nil {
 		msg = []interface{}{"ok"}
 	}
-	this.Data["json"] = M{"success": true, "msg": msg[0]}
+	this.Data["json"] = P{"success": true, "msg": msg[0]}
 	this.ServeJson()
 }
 
@@ -60,10 +61,19 @@ func (this *Util) EchoJson(m interface{}) {
 }
 
 func (this *Util) PageParam(page string, rows string) (int, int) {
-	p := this.I("page").(int)
-	r := this.I("rows").(int)
-	start := (p - 1) * r
-	return start, r
+	pInt, rInt := 1, 10
+	p := this.I(page)
+	r := this.I(rows)
+	switch p.(type) {
+	case int:
+		pInt = this.I(page).(int)
+	}
+	switch r.(type) {
+	case int:
+		rInt = this.I(rows).(int)
+	}
+	start := (pInt - 1) * rInt
+	return start, rInt
 }
 
 func Field(i interface{}, fieldName string) string {

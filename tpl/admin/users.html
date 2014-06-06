@@ -43,8 +43,7 @@
 <div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
      closed="true" buttons="#dlg-buttons">
     <form id="fm" method="post">
-        <input type="hidden" name="id" />
-        <input id="name" name="name" type="hidden">
+        <input type="hidden" name="_id" />
         <div class="fitem">
             <label>用户名:</label>
             <input type="text" name="name" id="name" value="" class="easyui-validatebox" required="true">
@@ -55,7 +54,7 @@
         </div>
         <div class="fitem">
             <span id="img_upload_show" style="color:red;margin-left:60px;"></span><br/>
-            <label>用户:</label>
+            <label>头像:</label>
             <input type="text" name="img" id="img" value="" class="easyui-validatebox" required="true">
             <input id="img_upload" type="button" value="添加用户" />
         </div>
