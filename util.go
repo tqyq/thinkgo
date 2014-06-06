@@ -60,20 +60,19 @@ func (this *Util) EchoJson(m interface{}) {
 	this.ServeJson()
 }
 
-func (this *Util) PageParam(page string, rows string) (int, int) {
-	pInt, rInt := 1, 10
+func (this *Util) PageParam(page string, rows string) (start int, rInt int) {
+	rInt = 10
 	p := this.I(page)
 	r := this.I(rows)
-	switch p.(type) {
-	case int:
-		pInt = this.I(page).(int)
-	}
 	switch r.(type) {
 	case int:
 		rInt = this.I(rows).(int)
 	}
-	start := (pInt - 1) * rInt
-	return start, rInt
+	switch p.(type) {
+	case int:
+		start = (this.I(page).(int) - 1) * rInt
+	}
+	return
 }
 
 func Field(i interface{}, fieldName string) string {
