@@ -13,9 +13,7 @@ func (this *Action) Index() {
 }
 
 func (this *Action) UserList() {
-	page := this.I("page").(int)
-	rows := this.I("rows").(int)
-	start := (page - 1) * rows
+	start, rows := this.PageParam("page", "rows")
 	total := this.D(User).Find(nil).Skip(start).Limit(rows).Count()
 	ms := []P{}
 	this.D(User).Find(nil).Skip(start).Limit(rows).All(&ms)
@@ -24,7 +22,7 @@ func (this *Action) UserList() {
 
 func (this *Action) UserAdd() {
 	m := this.F2m()
-	Info("m=", *m)
+	Info("UserAdd", *m)
 	this.D(User).Add(m)
 	this.EchoJsonOk()
 }

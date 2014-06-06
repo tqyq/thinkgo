@@ -59,6 +59,17 @@ func (this *Util) EchoJson(m interface{}) {
 	this.ServeJson()
 }
 
+func (this *Util) PageParam(page string, rows string) (int, int) {
+	p := this.I("page").(int)
+	r := this.I("rows").(int)
+	start := (p - 1) * r
+	return start, r
+}
+
+func Field(i interface{}, fieldName string) string {
+	return reflect.ValueOf(i).FieldByName(fieldName).String()
+}
+
 func AutoRoute(controllers ...ControllerInterface) {
 	for _, c := range controllers {
 		reg, err := regexp.Compile(`.*\.(\w+)Controller`)

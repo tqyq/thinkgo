@@ -8,6 +8,7 @@ func init() {
 	AppConfigPath = "conf/app.conf"
 	SetStaticPath("/js", "public/js")
 	SetStaticPath("/img", "public/img")
+	SetStaticPath("/favicon.ico", "public/img/favicon.ico")
 	SetStaticPath("/css", "public/css")
 	SetStaticPath("/html", "tpl")
 	SetStaticPath("/admin/js", "public/admin/js")

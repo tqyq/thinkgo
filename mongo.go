@@ -5,7 +5,6 @@ import (
 	//	"io"
 	//	"net"
 	//	"os"
-	//	"reflect"
 	. "github.com/astaxie/beego"
 	"labix.org/v2/mgo"
 )
@@ -35,7 +34,7 @@ func Mgo(collection string, f func(*mgo.Collection)) {
 	session := Session()
 	defer func() {
 		if err := recover(); err != nil {
-			Error(err)
+			Error("Mgo", err)
 		}
 		session.Close()
 	}()
@@ -45,7 +44,9 @@ func Mgo(collection string, f func(*mgo.Collection)) {
 
 type MongoModel struct {
 	Cname string
-	F     *P
+	F     *P  // find/query condition
+	Start int // query start at
+	Rows  int // query max rows
 }
 
 type MongoDb struct {
@@ -61,28 +62,47 @@ func (m *MongoModel) Find(p P) *MongoModel {
 }
 
 func (m *MongoModel) Skip(start int) *MongoModel {
+	m.Start = start
 	return m
 }
 
 func (m *MongoModel) Limit(rows int) *MongoModel {
+	m.Rows = rows
 	return m
 }
 
 func (m *MongoModel) All(result interface{}) {
+	Mgo(m.Cname, func(c *mgo.Collection) {
+		q := m.query(c)
+		q.All(&result)
+	})
 }
 
 func (m *MongoModel) Count() int {
 	var total int = 0
 	Mgo(m.Cname, func(c *mgo.Collection) {
-		total, _ = c.Find(m.F).Count()
+		q := m.query(c)
+		total, _ = q.Count()
 	})
 	return total
+}
+
+func (m *MongoModel) query(c *mgo.Collection) *mgo.Query {
+	q := c.Find(m.F).Skip(m.Start)
+	if m.Rows > 0 {
+		q = q.Limit(m.Rows)
+	}
+	return q
 }
 
 func (m *MongoModel) Add(docs ...interface{}) error {
 	var err error
 	Mgo(m.Cname, func(c *mgo.Collection) {
-		err = c.Insert(docs)
+		if len(docs) == 1 {
+			c.Insert(docs[0])
+		} else {
+			err = c.Insert(docs)
+		}
 	})
 	return err
 }
@@ -90,12 +110,21 @@ func (m *MongoModel) Add(docs ...interface{}) error {
 func (m *MongoModel) Save(docs ...interface{}) error {
 	var err error
 	Mgo(m.Cname, func(c *mgo.Collection) {
-		err = c.Update(m.F, docs)
+		if len(docs) == 1 && m.F == nil {
+			doc := docs[0]
+			id := Field(doc, "_id")
+			err = c.UpdateId(id, doc)
+		} else {
+			err = c.Update(m.F, docs)
+		}
 	})
 	return err
 }
 
 func (m *MongoModel) RemoveId(id string) {
+}
+
+func (m *MongoModel) Remove(selector interface{}) {
 }
 
 type P map[string]interface{}
