@@ -1,9 +1,6 @@
 package main
 
 import (
-	//	"io"
-	//	"net"
-	//	"os"
 	. "github.com/astaxie/beego"
 	"labix.org/v2/mgo"
 )

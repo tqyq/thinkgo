@@ -15,6 +15,8 @@ func init() {
 	SetStaticPath("/admin/img", "public/admin/img")
 	SetStaticPath("/admin/css", "public/admin/css")
 	SetStaticPath("/admin/assets", "public/admin")
+	SetLevel(LevelTrace)
+	SetLogFuncCall(true)
 }
 
 func main() {
