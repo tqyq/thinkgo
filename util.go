@@ -19,6 +19,8 @@ func (this *Util) I(key string) interface{} {
 		i, err := strconv.Atoi(v[0])
 		if err == nil {
 			return i
+		} else {
+			return v[0]
 		}
 	}
 	return v
