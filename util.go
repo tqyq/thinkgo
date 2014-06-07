@@ -14,13 +14,14 @@ type Util struct {
 }
 
 func (this *Util) I(key string) interface{} {
-	v := this.GetString(key)
-	i, err := strconv.Atoi(v)
-	if err != nil {
-		return v
-	} else {
-		return i
+	v := this.GetStrings(key)
+	if len(v) == 1 {
+		i, err := strconv.Atoi(v[0])
+		if err == nil {
+			return i
+		}
 	}
+	return v
 }
 
 func (this *Util) F2m() *P {

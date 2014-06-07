@@ -3,6 +3,7 @@ package main
 import (
 	. "github.com/astaxie/beego"
 	"labix.org/v2/mgo"
+	"labix.org/v2/mgo/bson"
 )
 
 const (
@@ -105,21 +106,33 @@ func (m *MongoModel) Add(docs ...interface{}) error {
 	return err
 }
 
-func (m *MongoModel) Save(docs ...interface{}) error {
+func (m *MongoModel) Save(p *P) error {
 	var err error
 	Mgo(m.Cname, func(c *mgo.Collection) {
-		if len(docs) == 1 && m.F == nil {
-			doc := docs[0]
-			id := Field(doc, "_id")
-			err = c.UpdateId(id, doc)
-		} else {
-			err = c.Update(m.F, docs)
+		id := (*p)["_id"]
+		var oid bson.ObjectId
+		switch id.(type) {
+		case string:
+			oid = bson.ObjectIdHex(id.(string))
+		case bson.ObjectId:
+			oid = id.(bson.ObjectId)
+		}
+		(*p)["_id"] = oid
+		err = c.UpdateId(oid, p)
+		if err != nil {
+			Error(err)
 		}
 	})
 	return err
 }
 
 func (m *MongoModel) RemoveId(id string) {
+	Mgo(m.Cname, func(c *mgo.Collection) {
+		err := c.RemoveId(bson.ObjectIdHex(id))
+		if err != nil {
+			Error(err)
+		}
+	})
 }
 
 func (m *MongoModel) Remove(selector interface{}) {

@@ -21,24 +21,19 @@ func (this *Action) UserList() {
 
 func (this *Action) UserAdd() {
 	m := this.F2m()
-	Info("UserAdd", *m)
 	this.D(User).Add(m)
 	this.EchoJsonOk()
 }
 
 func (this *Action) UserUpdate() {
 	m := this.F2m()
-	Info("m=", *m)
 	this.D(User).Save(m)
-	this.Echo("UserUpdate")
+	this.EchoJsonOk()
 }
 
 func (this *Action) UserDel() {
-	ids := this.GetStrings("ids[]")
-	for _, v := range ids {
-		//					Mgo(User, func(c *mgo.Collection) {
-		//						c.Remove(M{"_id": ObjectIdHex(v)})
-		//					})
+	ids := this.I("ids[]")
+	for _, v := range ids.([]string) {
 		this.D(User).RemoveId(v)
 	}
 	this.EchoJsonOk()

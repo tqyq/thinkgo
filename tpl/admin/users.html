@@ -132,7 +132,7 @@
                 if (r){
                     var ids = [];
                     for(var i=0;i<row.length;i++){
-                        ids[i] = row[i].id;
+                        ids[i] = row[i]._id;
                     }
                     $.post("/user/del", {"ids":ids}, function(r) {
                     	$('#dg').datagrid('reload');
