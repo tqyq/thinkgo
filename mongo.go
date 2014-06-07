@@ -106,10 +106,10 @@ func (m *MongoModel) Add(docs ...interface{}) error {
 	return err
 }
 
-func (m *MongoModel) Save(p *P) error {
+func (m *MongoModel) Save(p P) error {
 	var err error
 	Mgo(m.Cname, func(c *mgo.Collection) {
-		id := (*p)["_id"]
+		id := p["_id"]
 		var oid bson.ObjectId
 		switch id.(type) {
 		case string:
@@ -117,7 +117,7 @@ func (m *MongoModel) Save(p *P) error {
 		case bson.ObjectId:
 			oid = id.(bson.ObjectId)
 		}
-		(*p)["_id"] = oid
+		p["_id"] = oid
 		err = c.UpdateId(oid, p)
 		if err != nil {
 			Error(err)

@@ -37,6 +37,8 @@
 	<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新增</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="delUser()">删除</a>
+    <input type="text" id="sname" class="easyui-validatebox" >
+    <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="doSearch()">搜索</a>
 </div>
 	
 
@@ -46,16 +48,16 @@
         <input type="hidden" name="_id" />
         <div class="fitem">
             <label>用户名:</label>
-            <input type="text" name="name" id="name" value="" class="easyui-validatebox" required="true">
+            <input type="text" name="name" id="name" class="easyui-validatebox" required="true">
         </div>
         <div class="fitem">
             <label>注册时间:</label>
-            <input type="text" name="reg" id="reg" value="" class="easyui-validatebox" required="true">
+            <input type="text" name="reg" id="reg" class="easyui-validatebox" required="true">
         </div>
         <div class="fitem">
             <span id="img_upload_show" style="color:red;margin-left:60px;"></span><br/>
             <label>头像:</label>
-            <input type="text" name="img" id="img" value="" class="easyui-validatebox" required="true">
+            <input type="text" name="img" id="img" class="easyui-validatebox" required="true">
             <input id="img_upload" type="button" value="添加用户" />
         </div>
     </form>
@@ -141,6 +143,12 @@
                 }
             });
         }
+    }
+    
+    function doSearch() {
+		var name = $.trim($('#sname').val());
+        var param = {name:name};
+        $('#dg').datagrid('load', param);
     }
 </script>
 </body>

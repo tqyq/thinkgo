@@ -14,8 +14,9 @@ func (this *Action) Index() {
 
 func (this *Action) UserList() {
 	start, rows := this.PageParam("page", "rows")
-	total := this.D(User).Find(nil).Count()
-	ps := this.D(User).Find(nil).Skip(start).Limit(rows).All()
+	m := this.F2m("page", "rows")
+	total := this.D(User).Find(m).Count()
+	ps := this.D(User).Find(m).Skip(start).Limit(rows).All()
 	this.EchoJson(&P{"total": total, "rows": ps})
 }
 

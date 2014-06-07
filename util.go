@@ -26,17 +26,19 @@ func (this *Util) I(key string) interface{} {
 	return v
 }
 
-func (this *Util) F2m() *P {
+func (this *Util) F2m(exclude ...string) P {
 	r := this.Ctx.Request
 	r.ParseForm()
-	m := &P{}
+	m := P{}
 	for k, v := range r.Form {
-		if len(v) == 1 {
-			if len(v[0]) > 0 {
-				(*m)[k] = v[0]
+		if !InArray(exclude, k) {
+			if len(v) == 1 {
+				if len(v[0]) > 0 {
+					m[k] = v[0]
+				}
+			} else {
+				m[k] = v
 			}
-		} else {
-			(*m)[k] = v
 		}
 	}
 	return m
@@ -80,6 +82,15 @@ func (this *Util) PageParam(page string, rows string) (start int, rInt int) {
 
 func Field(i interface{}, fieldName string) string {
 	return reflect.ValueOf(i).FieldByName(fieldName).String()
+}
+
+func InArray(a []string, e string) bool {
+	for _, x := range a {
+		if x == e {
+			return true
+		}
+	}
+	return false
 }
 
 func AutoRoute(controllers ...ControllerInterface) {
