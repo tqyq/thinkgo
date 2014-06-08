@@ -52,6 +52,14 @@ func (this *Util) EchoJsonOk(msg ...interface{}) {
 	this.ServeJson()
 }
 
+func (this *Util) EchoJsonErr(msg ...interface{}) {
+	if msg == nil {
+		msg = []interface{}{"err"}
+	}
+	this.Data["json"] = P{"success": false, "msg": msg[0]}
+	this.ServeJson()
+}
+
 func (this *Util) Echo(msg ...interface{}) {
 	var out string = ""
 	for _, v := range msg {

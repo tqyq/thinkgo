@@ -5,8 +5,7 @@ import (
 )
 
 func (this *Action) Index() {
-	c := this.D(User).Find(P{"name": "action"}).Count()
-	Info(c)
+	Info("Index")
 	this.Data["Content"] = "index ..."
 	this.Data["Content2"] = "nav ..."
 	this.TplNames = "index/index.html"

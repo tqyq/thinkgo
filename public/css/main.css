@@ -1,3 +1,23 @@
 body {
-	
+	font-family: 微软雅黑;
+}
+
+.bg {
+	background: #eee;
+}
+
+.br3 {
+	border-radius: 3px
+}
+
+.b1 {
+	border: 1px solid #ccc;
+}
+
+.m10 {
+	margin: 10px;
+}
+
+.p10 {
+	padding: 10px;
 }

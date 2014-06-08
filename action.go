@@ -27,7 +27,11 @@ func (this *Action) Get() {
 			method += strings.ToUpper(m2[0:1]) + m2[1:]
 		}
 	} else {
-		method = m1 + m2
+		if len(match) == 0 {
+			method = m1
+		} else {
+			method = m1 + m2
+		}
 		before += m1
 	}
 	defer func() {
@@ -40,6 +44,7 @@ func (this *Action) Get() {
 	if b.IsValid() {
 		b.Call([]reflect.Value{})
 	}
+	Info(method)
 	v := reflect.ValueOf(this).MethodByName(method)
 	if v.IsValid() {
 		v.Call([]reflect.Value{})
