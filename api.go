@@ -4,6 +4,11 @@ import (
 	. "github.com/astaxie/beego"
 )
 
+func (this *Action) BeforeApi() {
+	this.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	this.Ctx.Output.Header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type")
+}
+
 func (this *Action) ApiUpload() {
 	file, fh, err := this.GetFile("file1")
 	Info(file, fh.Filename)

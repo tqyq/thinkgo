@@ -88,6 +88,21 @@ func (this *Util) PageParam(page string, rows string) (start int, rInt int) {
 	return
 }
 
+func (this *Util) Cookie(key string, value ...string) (v string) {
+	if len(value) == 0 {
+		v = this.Ctx.Input.Cookie(key)
+		return
+	} else {
+		this.Ctx.SetCookie(key, value[0])
+		v = value[0]
+		return
+	}
+}
+
+func (this *Util) Redirect(url string) {
+	this.Ctx.Redirect(302, url)
+}
+
 func Field(i interface{}, fieldName string) string {
 	return reflect.ValueOf(i).FieldByName(fieldName).String()
 }

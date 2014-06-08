@@ -1,15 +1,8 @@
 package main
 
 import (
-	. "github.com/astaxie/beego"
+//	. "github.com/astaxie/beego"
 )
-
-func (this *Action) Index() {
-	Info("Index")
-	this.Data["Content"] = "index ..."
-	this.Data["Content2"] = "nav ..."
-	this.TplNames = "index/index.html"
-}
 
 func (this *Action) UserList() {
 	start, rows := this.PageParam("page", "rows")
