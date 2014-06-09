@@ -10,6 +10,7 @@ func (this *Action) Index() {
 	Info("Index")
 	this.Data["Content"] = "index ..."
 	this.Data["Content2"] = "nav ..."
+	this.Captcha()
 	this.TplNames = "index/index.html"
 	this.cookieTest()
 	this.cacheTest()

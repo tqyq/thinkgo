@@ -2,6 +2,7 @@ package main
 
 import (
 	. "github.com/astaxie/beego"
+	"os"
 )
 
 func (this *Action) BeforeApi() {
@@ -12,7 +13,8 @@ func (this *Action) BeforeApi() {
 func (this *Action) ApiUpload() {
 	file, fh, err := this.GetFile("file1")
 	Info(file, fh.Filename)
-	err = this.SaveToFile("file1", "upload/"+fh.Filename)
+	pwd, _ := os.Getwd()
+	err = this.SaveToFile("file1", pwd+"/upload/"+fh.Filename)
 	if err != nil {
 		Error(err)
 		this.EchoJsonErr(err)

@@ -21,3 +21,8 @@ body {
 .p10 {
 	padding: 10px;
 }
+
+.captcha-img {
+	width: 120px;
+	height: 40px;
+}

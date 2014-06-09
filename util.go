@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	. "github.com/astaxie/beego"
+	"github.com/astaxie/beego/utils/captcha"
 	"net/smtp"
 	"reflect"
 	"regexp"
@@ -102,6 +103,11 @@ func (this *Util) Cookie(key string, value ...string) (v string) {
 
 func (this *Util) Redirect(url string) {
 	this.Ctx.Redirect(302, url)
+}
+
+func (this *Util) Captcha() {
+	cpt := captcha.NewWithFilter("/captcha/", bm)
+	Debug(cpt)
 }
 
 func S(key string, p ...interface{}) (v interface{}) {
