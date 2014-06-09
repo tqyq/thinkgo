@@ -20,3 +20,31 @@ func (this *Action) ApiUpload() {
 		this.EchoJsonOk()
 	}
 }
+
+func (this *Action) ApiSendmail() {
+	user := "tsyadmin@126.com"
+	password := "Admin123"
+	host := "smtp.126.com:25"
+	to := "jindaodama@qq.com"
+
+	subject := "Test send email by golang"
+
+	body := `
+	<html>
+	<body>
+	<h3>
+	"Test send email by golang"
+	</h3>
+	</body>
+	</html>
+	`
+	Debug("send email")
+	err := SendMail(user, password, host, to, subject, body, "html")
+	if err != nil {
+		Debug("send mail error!")
+		Debug(err)
+	} else {
+		Debug("send mail success!")
+	}
+	this.EchoJsonOk()
+}

@@ -22,11 +22,12 @@ func (this *Action) cookieTest() {
 }
 
 func (this *Action) cacheTest() {
-	Info(this.S("cache"))
-	this.S("cache", "testcache", 1)
-	Info(this.S("cache"))
-	this.Data["cache"] = this.S("cache")
+	Info(S("cache"))
+	S("cache", "testcache", 1)
+	Info(S("cache"))
+	this.Data["cache"] = S("cache")
 }
+
 func (this *Action) httpClientTest() {
 	req := httplib.Get("http://www.baidu.com/")
 	str, err := req.String()
