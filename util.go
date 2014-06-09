@@ -1,6 +1,8 @@
 package main
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"fmt"
 	. "github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/captcha"
@@ -108,6 +110,13 @@ func (this *Util) Redirect(url string) {
 func (this *Util) Captcha() {
 	cpt := captcha.NewWithFilter("/captcha/", bm)
 	Debug(cpt)
+}
+
+func Md5(s string) (r string) {
+	h := md5.New()
+	h.Write([]byte(s))
+	r = hex.EncodeToString(h.Sum(nil))
+	return
 }
 
 func S(key string, p ...interface{}) (v interface{}) {
