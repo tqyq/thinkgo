@@ -2,6 +2,8 @@ package main
 
 import (
 	. "github.com/astaxie/beego"
+	"github.com/astaxie/beego/httplib"
+	"time"
 )
 
 func (this *Action) Index() {
@@ -9,18 +11,32 @@ func (this *Action) Index() {
 	this.Data["Content"] = "index ..."
 	this.Data["Content2"] = "nav ..."
 	this.TplNames = "index/index.html"
-	this.CookieTest()
-	this.CacheTest()
+	this.cookieTest()
+	this.cacheTest()
+	go this.httpClientTest()
 }
 
-func (this *Action) CookieTest() {
+func (this *Action) cookieTest() {
 	this.Cookie("test", "testcookie")
 	this.Data["cookie"] = this.Cookie("test")
 }
 
-func (this *Action) CacheTest() {
+func (this *Action) cacheTest() {
 	Info(this.S("cache"))
 	this.S("cache", "testcache", 1)
 	Info(this.S("cache"))
 	this.Data["cache"] = this.S("cache")
+}
+func (this *Action) httpClientTest() {
+	req := httplib.Get("http://www.baidu.com/")
+	str, err := req.String()
+	if err != nil {
+		Error(err)
+	}
+	Info(len(str))
+	str, err = httplib.Post("http://www.baidu.com/").SetTimeout(100*time.Second, 30*time.Second).Param("wd", "go").String()
+	if err != nil {
+		Error(err)
+	}
+	Info(len(str))
 }
