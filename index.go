@@ -11,6 +11,8 @@ func (this *Action) Index() {
 	this.Data["Content"] = "index ..."
 	this.Data["Content2"] = "nav ..."
 	this.Captcha()
+	this.Data["Time"] = time.Now().Format("2006-01-02 15:04:05")
+	this.Data["data"] = []P{P{"name": "u1"}, P{"name": "u2"}}
 	this.TplNames = "index/index.html"
 	this.cookieTest()
 	this.cacheTest()

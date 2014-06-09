@@ -16,12 +16,18 @@
 {{template "index/nav.html" .}}
 使用变量:
 index/{{.Content}}
+<br>
+循环:
+{{range $k, $v := .data}}
+序号: {{$k}}
+值: {{$v.name}}
+{{end}}
 </div>
 <div class="br3 b1 m10 p10 bg" >
 验证码演示: {{create_captcha}}
 </div>
 <div class="br3 b1 m10 p10 bg" >
-日期演示
+日期演示: {{.Time}}
 </div>
 <div class="br3 b1 m10 p10 bg" >
 Cache演示: {{.cache}}
