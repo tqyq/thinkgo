@@ -2,7 +2,10 @@ package main
 
 import (
 	. "github.com/astaxie/beego"
+	"github.com/astaxie/beego/cache"
 )
+
+var bm cache.Cache
 
 func init() {
 	AppConfigPath = "conf/app.conf"
@@ -17,6 +20,7 @@ func init() {
 	SetStaticPath("/admin/assets", "public/admin")
 	SetLevel(LevelTrace)
 	SetLogFuncCall(true)
+	bm, _ = cache.NewCache("memory", `{"interval":60}`)
 }
 
 func main() {

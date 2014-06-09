@@ -103,6 +103,26 @@ func (this *Util) Redirect(url string) {
 	this.Ctx.Redirect(302, url)
 }
 
+func (this *Util) S(key string, p ...interface{}) (v interface{}) {
+	if len(p) == 0 {
+		return bm.Get(key)
+	} else {
+		if len(p) == 2 {
+			var ttl int64
+			switch p[1].(type) {
+			case int:
+				ttl = int64(p[1].(int))
+			case int64:
+				ttl = p[1].(int64)
+			}
+			bm.Put(key, p[0], ttl)
+		} else if len(p) == 1 {
+			bm.Put(key, p[0], 1e9)
+		}
+		return p[0]
+	}
+}
+
 func Field(i interface{}, fieldName string) string {
 	return reflect.ValueOf(i).FieldByName(fieldName).String()
 }
