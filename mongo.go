@@ -6,11 +6,6 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-const (
-	User string = "user"
-	Msg  string = "msg"
-)
-
 var (
 	session      *mgo.Session
 	databaseName = "cms_go"
@@ -41,9 +36,10 @@ func Mgo(collection string, f func(*mgo.Collection)) {
 
 type MongoModel struct {
 	Cname string
-	F     *P  // find/query condition
-	Start int // query start at
-	Rows  int // query max rows
+	F     *P     // find/query condition
+	Start int    // query start at
+	Rows  int    // query max rows
+	S     string // sort
 }
 
 type MongoDb struct {
@@ -68,6 +64,16 @@ func (m *MongoModel) Limit(rows int) *MongoModel {
 	return m
 }
 
+func (m *MongoModel) Sort(s string) *MongoModel {
+	m.S = s
+	return m
+}
+
+func (m *MongoModel) Like(k string, v string) *MongoModel {
+	// TODO
+	return m
+}
+
 func (m *MongoModel) All() *[]P {
 	ps := []P{}
 	Mgo(m.Cname, func(c *mgo.Collection) {
@@ -77,6 +83,15 @@ func (m *MongoModel) All() *[]P {
 	return &ps
 }
 
+func (m *MongoModel) One() (r interface{}) {
+	p := P{}
+	Mgo(m.Cname, func(c *mgo.Collection) {
+		q := m.query(c)
+		q.One(&p)
+	})
+	return &p
+}
+
 func (m *MongoModel) Count() int {
 	total := 0
 	Mgo(m.Cname, func(c *mgo.Collection) {
@@ -84,14 +99,6 @@ func (m *MongoModel) Count() int {
 		total, _ = q.Count()
 	})
 	return total
-}
-
-func (m *MongoModel) query(c *mgo.Collection) *mgo.Query {
-	q := c.Find(m.F).Skip(m.Start)
-	if m.Rows > 0 {
-		q = q.Limit(m.Rows)
-	}
-	return q
 }
 
 func (m *MongoModel) Add(docs ...interface{}) error {
@@ -138,4 +145,13 @@ func (m *MongoModel) RemoveId(id string) {
 func (m *MongoModel) Remove(selector interface{}) {
 }
 
-type P map[string]interface{}
+func (m *MongoModel) query(c *mgo.Collection) *mgo.Query {
+	q := c.Find(m.F).Skip(m.Start)
+	if m.Rows > 0 {
+		q = q.Limit(m.Rows)
+	}
+	if &m.S != nil {
+		q = q.Sort(m.S)
+	}
+	return q
+}

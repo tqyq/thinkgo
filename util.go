@@ -182,3 +182,5 @@ func AutoRoute(controllers ...ControllerInterface) {
 		AutoRouter(c)
 	}
 }
+
+type P map[string]interface{}
