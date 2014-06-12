@@ -21,15 +21,16 @@ type Util struct {
 
 type DbModel interface {
 	Find(p P) (m DbModel)
-	Skip(start int) (m DbModel)
+	Field(s ...string) (m DbModel)
 	Limit(rows int) (m DbModel)
-	Count() int
-	All() *[]P
-	One() (r interface{})
+	Skip(start int) (m DbModel)
 	Sort(s string) (m DbModel)
 	Add(docs ...interface{}) error
-	Save(p P) error
+	All() *[]P
+	Count() int
+	One() (r interface{})
 	RemoveId(id string)
+	Save(p P) error
 }
 
 func InitDb() {

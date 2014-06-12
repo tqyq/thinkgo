@@ -34,15 +34,26 @@ func Mgo(collection string, f func(*mgo.Collection)) {
 }
 
 type MongoModel struct {
-	Cname string
-	F     *P     // find/query condition
-	Start int    // query start at
-	Rows  int    // query max rows
-	S     string // sort
+	Cname  string
+	F      *P     // find/query condition
+	Start  int    // query start at
+	Rows   int    // query max rows
+	S      string // sort
+	Select *P     // select field
 }
 
 func (m MongoModel) Find(p P) DbModel {
 	m.F = &p
+	return m
+}
+
+func (m MongoModel) Field(s ...string) DbModel {
+	if m.Select == nil {
+		m.Select = &P{}
+	}
+	for _, k := range s {
+		(*m.Select)[k] = 1
+	}
 	return m
 }
 
@@ -153,6 +164,9 @@ func (m MongoModel) query(c *mgo.Collection) *mgo.Query {
 	}
 	if len(m.S) > 0 {
 		q = q.Sort(m.S)
+	}
+	if m.Select != nil {
+		q = q.Select(m.Select)
 	}
 	return q
 }
