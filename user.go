@@ -1,33 +1,34 @@
 package main
 
 import (
-//	. "github.com/astaxie/beego"
+	. "github.com/astaxie/beego"
 )
 
 func (this *Action) UserList() {
 	start, rows := this.PageParam("page", "rows")
 	m := this.F2m("page", "rows")
-	total := this.D(User).Find(m).Count()
-	ps := this.D(User).Find(m).Skip(start).Limit(rows).All()
+	total := D(User).Find(m).Count()
+	ps := D(User).Find(m).Skip(start).Limit(rows).Sort("-name").All()
 	this.EchoJson(&P{"total": total, "rows": ps})
 }
 
 func (this *Action) UserAdd() {
 	m := this.F2m()
-	this.D(User).Add(m)
+	D(User).Add(m)
 	this.EchoJsonOk()
 }
 
 func (this *Action) UserUpdate() {
 	m := this.F2m()
-	this.D(User).Save(m)
+	D(User).Save(m)
 	this.EchoJsonOk()
 }
 
 func (this *Action) UserDel() {
-	ids := this.I("ids[]")
-	for _, v := range ids.([]string) {
-		this.D(User).RemoveId(v)
+	ids := this.Is("ids[]")
+	Debug(ids)
+	for _, v := range ids {
+		D(User).RemoveId(v)
 	}
 	this.EchoJsonOk()
 }

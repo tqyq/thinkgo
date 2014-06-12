@@ -9,7 +9,6 @@ import (
 
 type Action struct {
 	Util
-	MongoDb
 }
 
 func (this *Action) Get() {

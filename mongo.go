@@ -7,14 +7,13 @@ import (
 )
 
 var (
-	session      *mgo.Session
-	databaseName = "cms_go"
+	session *mgo.Session
 )
 
 func Session() *mgo.Session {
 	if session == nil {
 		var err error
-		session, err = mgo.Dial("localhost")
+		session, err = mgo.Dial(DbHost)
 		if err != nil {
 			panic(err) // no, not really
 		}
@@ -30,7 +29,7 @@ func Mgo(collection string, f func(*mgo.Collection)) {
 		}
 		session.Close()
 	}()
-	c := session.DB(databaseName).C(collection)
+	c := session.DB(DbName).C(collection)
 	f(c)
 }
 
@@ -42,39 +41,32 @@ type MongoModel struct {
 	S     string // sort
 }
 
-type MongoDb struct {
-}
-
-func (*MongoDb) D(name string) (m *MongoModel) {
-	return &MongoModel{Cname: name}
-}
-
-func (m *MongoModel) Find(p P) *MongoModel {
+func (m MongoModel) Find(p P) DbModel {
 	m.F = &p
 	return m
 }
 
-func (m *MongoModel) Skip(start int) *MongoModel {
+func (m MongoModel) Skip(start int) DbModel {
 	m.Start = start
 	return m
 }
 
-func (m *MongoModel) Limit(rows int) *MongoModel {
+func (m MongoModel) Limit(rows int) DbModel {
 	m.Rows = rows
 	return m
 }
 
-func (m *MongoModel) Sort(s string) *MongoModel {
+func (m MongoModel) Sort(s string) DbModel {
 	m.S = s
 	return m
 }
 
-func (m *MongoModel) Like(k string, v string) *MongoModel {
+func (m MongoModel) Like(k string, v string) DbModel {
 	// TODO
 	return m
 }
 
-func (m *MongoModel) All() *[]P {
+func (m MongoModel) All() *[]P {
 	ps := []P{}
 	Mgo(m.Cname, func(c *mgo.Collection) {
 		q := m.query(c)
@@ -83,16 +75,16 @@ func (m *MongoModel) All() *[]P {
 	return &ps
 }
 
-func (m *MongoModel) One() (r interface{}) {
+func (m MongoModel) One() (r interface{}) {
 	p := P{}
 	Mgo(m.Cname, func(c *mgo.Collection) {
 		q := m.query(c)
 		q.One(&p)
 	})
-	return &p
+	return p
 }
 
-func (m *MongoModel) Count() int {
+func (m MongoModel) Count() int {
 	total := 0
 	Mgo(m.Cname, func(c *mgo.Collection) {
 		q := m.query(c)
@@ -101,7 +93,7 @@ func (m *MongoModel) Count() int {
 	return total
 }
 
-func (m *MongoModel) Add(docs ...interface{}) error {
+func (m MongoModel) Add(docs ...interface{}) error {
 	var err error
 	Mgo(m.Cname, func(c *mgo.Collection) {
 		if len(docs) == 1 {
@@ -113,7 +105,7 @@ func (m *MongoModel) Add(docs ...interface{}) error {
 	return err
 }
 
-func (m *MongoModel) Save(p P) error {
+func (m MongoModel) Save(p P) error {
 	var err error
 	Mgo(m.Cname, func(c *mgo.Collection) {
 		id := p["_id"]
@@ -133,7 +125,7 @@ func (m *MongoModel) Save(p P) error {
 	return err
 }
 
-func (m *MongoModel) RemoveId(id string) {
+func (m MongoModel) RemoveId(id string) {
 	Mgo(m.Cname, func(c *mgo.Collection) {
 		err := c.RemoveId(bson.ObjectIdHex(id))
 		if err != nil {
@@ -142,15 +134,24 @@ func (m *MongoModel) RemoveId(id string) {
 	})
 }
 
-func (m *MongoModel) Remove(selector interface{}) {
+func (m MongoModel) Remove(selector interface{}) {
 }
 
-func (m *MongoModel) query(c *mgo.Collection) *mgo.Query {
+func (m MongoModel) Explain() (result interface{}) {
+	p := P{}
+	Mgo(m.Cname, func(c *mgo.Collection) {
+		q := m.query(c)
+		q.Explain(p)
+	})
+	return p
+}
+
+func (m MongoModel) query(c *mgo.Collection) *mgo.Query {
 	q := c.Find(m.F).Skip(m.Start)
 	if m.Rows > 0 {
 		q = q.Limit(m.Rows)
 	}
-	if &m.S != nil {
+	if len(m.S) > 0 {
 		q = q.Sort(m.S)
 	}
 	return q

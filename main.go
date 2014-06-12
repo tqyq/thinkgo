@@ -24,6 +24,7 @@ func init() {
 }
 
 func main() {
+	InitDb()
 	Router("/*", &Action{}, "*:Get")
 	Run()
 }

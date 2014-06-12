@@ -13,21 +13,46 @@ import (
 	"strings"
 )
 
+var DbType, DbHost, DbName, DbUser, DbPwd, DbPort = "", "", "", "", "", 0
+
 type Util struct {
 	Controller
 }
 
+type DbModel interface {
+	Find(p P) (m DbModel)
+	Skip(start int) (m DbModel)
+	Limit(rows int) (m DbModel)
+	Count() int
+	All() *[]P
+	One() (r interface{})
+	Sort(s string) (m DbModel)
+	Add(docs ...interface{}) error
+	Save(p P) error
+	RemoveId(id string)
+}
+
+func InitDb() {
+	DbType = AppConfig.String("db::type")
+	DbHost = AppConfig.String("db::host")
+	DbName = AppConfig.String("db::name")
+	DbUser = AppConfig.String("db::user")
+	DbPwd = AppConfig.String("db::pwd")
+	DbPort, _ = AppConfig.Int("db::port")
+}
+
 func (this *Util) I(key string) interface{} {
-	v := this.GetStrings(key)
-	if len(v) == 1 {
-		i, err := strconv.Atoi(v[0])
-		if err == nil {
-			return i
-		} else {
-			return v[0]
-		}
+	v := this.GetString(key)
+	i, err := strconv.Atoi(v)
+	if err == nil {
+		return i
+	} else {
+		return v
 	}
-	return v
+}
+
+func (this *Util) Is(key string) []string {
+	return this.GetStrings(key)
 }
 
 func (this *Util) F2m(exclude ...string) P {
@@ -117,6 +142,14 @@ func Md5(s string) (r string) {
 	h.Write([]byte(s))
 	r = hex.EncodeToString(h.Sum(nil))
 	return
+}
+
+func D(name string) (m DbModel) {
+	if DbType == "mongo" {
+		m = MongoModel{Cname: name}
+		return
+	}
+	return nil
 }
 
 func S(key string, p ...interface{}) (v interface{}) {
