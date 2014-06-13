@@ -33,6 +33,10 @@ func Mgo(collection string, f func(*mgo.Collection)) {
 	f(c)
 }
 
+func MgoLike(v string) (result interface{}) {
+	return &bson.RegEx{Pattern: v, Options: "i"}
+}
+
 type MongoModel struct {
 	Cname  string
 	F      *P     // find/query condition
@@ -69,11 +73,6 @@ func (m MongoModel) Limit(rows int) DbModel {
 
 func (m MongoModel) Sort(s string) DbModel {
 	m.S = s
-	return m
-}
-
-func (m MongoModel) Like(k string, v string) DbModel {
-	// TODO
 	return m
 }
 

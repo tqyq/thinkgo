@@ -8,7 +8,6 @@ import (
 	"github.com/astaxie/beego/utils/captcha"
 	"net/smtp"
 	"reflect"
-	"regexp"
 	"strconv"
 	"strings"
 )
@@ -20,6 +19,7 @@ type Util struct {
 }
 
 type DbModel interface {
+	Explain() (result interface{})
 	Find(p P) (m DbModel)
 	Field(s ...string) (m DbModel)
 	Limit(rows int) (m DbModel)
@@ -56,22 +56,20 @@ func (this *Util) Is(key string) []string {
 	return this.GetStrings(key)
 }
 
-func (this *Util) F2m(exclude ...string) P {
+func (this *Util) F2p() P {
 	r := this.Ctx.Request
 	r.ParseForm()
-	m := P{}
+	p := P{}
 	for k, v := range r.Form {
-		if !InArray(exclude, k) {
-			if len(v) == 1 {
-				if len(v[0]) > 0 {
-					m[k] = v[0]
-				}
-			} else {
-				m[k] = v
+		if len(v) == 1 {
+			if len(v[0]) > 0 {
+				p[k] = v[0]
 			}
+		} else {
+			p[k] = v
 		}
 	}
-	return m
+	return p
 }
 
 func (this *Util) EchoJsonOk(msg ...interface{}) {
@@ -202,19 +200,38 @@ func InArray(a []string, e string) bool {
 	return false
 }
 
-func AutoRoute(controllers ...ControllerInterface) {
-	for _, c := range controllers {
-		reg, err := regexp.Compile(`.*\.(\w+)Controller`)
-		if err != nil {
-			Info(err)
-		} else {
-			match := reg.FindStringSubmatch(reflect.TypeOf(c).String())
-			if len(match) > 1 {
-				Router("/"+strings.ToLower(match[1])+"/", c)
-			}
-		}
-		AutoRouter(c)
-	}
-}
+//func AutoRoute(controllers ...ControllerInterface) {
+//	for _, c := range controllers {
+//		reg, err := regexp.Compile(`.*\.(\w+)Controller`)
+//		if err != nil {
+//			Info(err)
+//		} else {
+//			match := reg.FindStringSubmatch(reflect.TypeOf(c).String())
+//			if len(match) > 1 {
+//				Router("/"+strings.ToLower(match[1])+"/", c)
+//			}
+//		}
+//		AutoRouter(c)
+//	}
+//}
 
 type P map[string]interface{}
+
+func (p P) Like(keys ...string) P {
+	if DbType == "mongo" {
+		for _, k := range keys {
+			v := p[k]
+			if v != nil {
+				p[k] = MgoLike(fmt.Sprintf("%v", v))
+			}
+		}
+	}
+	return p
+}
+
+func (p P) Rm(exclude ...string) P {
+	for _, k := range exclude {
+		delete(p, k)
+	}
+	return p
+}

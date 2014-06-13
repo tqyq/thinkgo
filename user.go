@@ -6,21 +6,21 @@ import (
 
 func (this *Action) UserList() {
 	start, rows := this.PageParam("page", "rows")
-	m := this.F2m("page", "rows")
-	total := D(User).Find(m).Count()
-	ps := D(User).Find(m).Skip(start).Limit(rows).Sort("-name").All()
+	p := this.F2p().Rm("page", "rows").Like("name")
+	total := D(User).Find(p).Count()
+	ps := D(User).Find(p).Skip(start).Limit(rows).Sort("-name").All()
 	this.EchoJson(&P{"total": total, "rows": ps})
 }
 
 func (this *Action) UserAdd() {
-	m := this.F2m()
-	D(User).Add(m)
+	p := this.F2p()
+	D(User).Add(p)
 	this.EchoJsonOk()
 }
 
 func (this *Action) UserUpdate() {
-	m := this.F2m()
-	D(User).Save(m)
+	p := this.F2p()
+	D(User).Save(p)
 	this.EchoJsonOk()
 }
 
