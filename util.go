@@ -229,9 +229,33 @@ func (p P) Like(keys ...string) P {
 	return p
 }
 
+func (p P) Or(keys ...string) P {
+	if DbType == "mongo" {
+		for _, k := range keys {
+			v := p[k]
+			if v != nil {
+				// TODO
+			}
+		}
+	}
+	return p
+}
+
 func (p P) Rm(exclude ...string) P {
 	for _, k := range exclude {
 		delete(p, k)
 	}
 	return p
 }
+
+//func (p P) Gt(keys ...string) P {
+//	if DbType == "mongo" {
+//		for _, k := range keys {
+//			v := p[k]
+//			if v != nil {
+//				// TODO
+//			}
+//		}
+//	}
+//	return p
+//}

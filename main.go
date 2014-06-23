@@ -1,30 +1,31 @@
 package main
 
 import (
-	. "github.com/astaxie/beego"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/cache"
 )
 
 var bm cache.Cache
 
 func init() {
-	AppConfigPath = "conf/app.conf"
-	SetStaticPath("/js", "public/js")
-	SetStaticPath("/img", "public/img")
-	SetStaticPath("/favicon.ico", "public/img/favicon.ico")
-	SetStaticPath("/css", "public/css")
-	SetStaticPath("/html", "tpl")
-	SetStaticPath("/admin/js", "public/admin/js")
-	SetStaticPath("/admin/img", "public/admin/img")
-	SetStaticPath("/admin/css", "public/admin/css")
-	SetStaticPath("/admin/assets", "public/admin")
-	SetLevel(LevelTrace)
-	SetLogFuncCall(true)
+	beego.AppConfigPath = "conf/app.conf"
+	beego.SetStaticPath("/js", "public/js")
+	beego.SetStaticPath("/img", "public/img")
+	beego.SetStaticPath("/favicon.ico", "public/img/favicon.ico")
+	beego.SetStaticPath("/css", "public/css")
+	beego.SetStaticPath("/html", "tpl")
+	beego.SetStaticPath("/admin/js", "public/admin/js")
+	beego.SetStaticPath("/admin/img", "public/admin/img")
+	beego.SetStaticPath("/admin/css", "public/admin/css")
+	beego.SetStaticPath("/admin/assets", "public/admin")
+	beego.SetLevel(beego.LevelTrace)
+	beego.SetLogFuncCall(true)
 	bm, _ = cache.NewCache("memory", `{"interval":60}`)
 }
 
 func main() {
 	InitDb()
-	Router("/*", &Action{}, "*:Get")
-	Run()
+	beego.Router("/", &Action{}, "*:Get")
+	beego.Router("/*", &Action{}, "*:Get")
+	beego.Run()
 }
