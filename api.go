@@ -13,8 +13,8 @@ func (this *Action) BeforeApi() {
 func (this *Action) ApiUpload() {
 	file, fh, err := this.GetFile("file1")
 	Info(file, fh.Filename)
-	pwd, _ := os.Getwd()
-	err = this.SaveToFile("file1", pwd+"/upload/"+fh.Filename)
+	wd, _ := os.Getwd()
+	err = this.SaveToFile("file1", wd+"/upload/"+fh.Filename)
 	if err != nil {
 		Error(err)
 		this.EchoJsonErr(err)

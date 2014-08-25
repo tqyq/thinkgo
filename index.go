@@ -38,10 +38,10 @@ func (this *Action) httpClientTest() {
 	if err != nil {
 		Error(err)
 	}
-	Info(len(str))
+	Debug(len(str))
 	str, err = httplib.Post("http://www.baidu.com/").SetTimeout(100*time.Second, 30*time.Second).Param("wd", "go").String()
 	if err != nil {
 		Error(err)
 	}
-	Info(len(str))
+	Debug(len(str))
 }
