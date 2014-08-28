@@ -18,7 +18,7 @@ func init() {
 	beego.SetStaticPath("/admin/img", "public/admin/img")
 	beego.SetStaticPath("/admin/css", "public/admin/css")
 	beego.SetStaticPath("/admin/assets", "public/admin")
-	beego.SetLevel(beego.LevelTrace)
+	beego.SetLevel(beego.LevelDebug)
 	beego.SetLogFuncCall(true)
 	bm, _ = cache.NewCache("memory", `{"interval":60}`)
 }
