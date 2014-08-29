@@ -17,10 +17,14 @@ https://github.com/tqyq/gopath.git
 
 然后`运行GOPATH路径下面的install.bat`。
 
+以上步骤如果运行无误，将%GOPATH%\bin加入到系统PATH里面，这样可以在任意位置运行bee.exe。
+
 ### 演示工程 ###
 
 https://github.com/tqyq/cms_go.git
 
 将上述工程clone到本地，`启动mongo数据库`，然后`运行工程目录下的run.bat`，默认监听3001端口，如果没有异常，在浏览器输入http://localhost:3001就可以看到页面。
+
+![alt tag](https://github.com/tqyq/cms_go/blob/master/public/img/tg.jpg?raw=true)
 
 运行成功后，之后修改go代码并保存，环境会自动编译和重新运行，不用手工重启，如果编译出现错误，修正后仍可自动运行。
