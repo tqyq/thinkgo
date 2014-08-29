@@ -1,4 +1,4 @@
-cms_go
+ThinkGo
 ======
 
 ### 以下说明以windows环境下为例 ###
