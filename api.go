@@ -27,7 +27,7 @@ func (this *Action) ApiSendmail() {
 	user := "tsyadmin@126.com"
 	password := "Admin123"
 	host := "smtp.126.com:25"
-	to := "jindaodama@qq.com"
+	to := "tsyadmin@126.com"
 
 	subject := "Test send email by golang"
 
