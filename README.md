@@ -1,7 +1,40 @@
 ThinkGo
 ======
 
-### 以下说明以windows环境下为例 ###
+ThinkGo是一个仿照ThinkPHP方式的go web开发示例，使用框架[beego](http://beego.me/)。
+示例包含了常见的web开发应用场景，数据的操作目前只支持mongodb的CRUD操作，方式上仿照ThinkPHP的D()，I()，S()等函数，简化了go web开发。
+代码片段：
+
+	func (this *Action) UserList() {
+		start, rows := this.PageParam("page", "rows")
+		p := this.F2p().Rm("page", "rows").Like("name")
+		total := D(User).Find(p).Count()
+		ps := D(User).Find(p).Skip(start).Limit(rows).Sort("-name").All()
+		this.EchoJson(&P{"total": total, "rows": ps})
+	}
+	
+	func (this *Action) UserAdd() {
+		p := this.F2p()
+		D(User).Add(p)
+		this.EchoJsonOk()
+	}
+	
+	func (this *Action) UserUpdate() {
+		p := this.F2p()
+		D(User).Save(p)
+		this.EchoJsonOk()
+	}
+	
+	func (this *Action) UserDel() {
+		ids := this.Is("ids[]")
+		Debug(ids)
+		for _, v := range ids {
+			D(User).RemoveId(v)
+		}
+		this.EchoJsonOk()
+	}
+
+### 以下安装说明以windows环境下为例 ###
 
 ### 前提 ###
 
