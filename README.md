@@ -1,13 +1,13 @@
 cms_go
 ======
 
-### 以下说明以windows环境下为例。### 
+### 以下说明以windows环境下为例 ### 
 
-### 前提：### 
+### 前提 ### 
 
 已经安装了go1.3以上版本的开发环境。
 
-### 配置GOPATH ### 
+### 配置GOPATH ###
 
 GOPATH git:
 
@@ -17,7 +17,7 @@ https://github.com/tqyq/gopath.git
 
 然后运行GOPATH路径下面的install.bat。
 
-### 演示工程 ### 
+### 演示工程 ###
 
 https://github.com/tqyq/cms_go.git
 
