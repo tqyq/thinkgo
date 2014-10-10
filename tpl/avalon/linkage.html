@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="/js/avalon.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+            avalon.define({
+                $id: "fruit",
+                options: ["苹果", "香蕉", "桃子", "雪梨", "葡萄", "哈蜜瓜", "橙子", "火龙果", "荔技", "黄皮"],
+                selected: "桃子"
+            })
+        </script>
+    </head>
+    <body ms-controller="fruit">
+        <h3>文本域与下拉框的联动</h3>
+        <input  ms-duplex="selected" />
+        <select ms-duplex="selected" >
+            <option ms-repeat-option="options" ms-value="option" >{{option}}</option>
+        </select>
+    </body>
+</html>
