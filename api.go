@@ -50,3 +50,7 @@ func (this *Action) ApiSendmail() {
 	}
 	this.EchoJsonOk()
 }
+
+func (this *Action) ApiTest() {
+	this.EchoJsonOk()
+}
