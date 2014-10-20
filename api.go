@@ -52,5 +52,6 @@ func (this *Action) ApiSendmail() {
 }
 
 func (this *Action) ApiTest() {
+	Info("ApiTest")
 	this.EchoJsonOk()
 }

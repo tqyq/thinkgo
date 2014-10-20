@@ -20,6 +20,7 @@ func init() {
 	beego.SetStaticPath("/admin/assets", "public/admin")
 	beego.SetLevel(beego.LevelDebug)
 	beego.SetLogFuncCall(true)
+	beego.BeeLogger.SetLogFuncCallDepth(4)
 	bm, _ = cache.NewCache("memory", `{"interval":60}`)
 }
 
