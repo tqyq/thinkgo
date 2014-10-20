@@ -6,14 +6,15 @@
         <script>
             var model = avalon.define({
                 $id: "test",
-                array: ["aaa","bbb","ccc"]
+                array: [ [1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12] ]
             })
- 
         </script>
     </head>
     <body ms-controller="test">
-        <ul>
-            <li ms-repeat="array">{{el}} --- {{$index}}</li>
-        </ul>
+        <table border="1">
+            <tr ms-repeat-el="array">
+                <td ms-repeat-elem="el">{{elem}}  它位于第<b style="color:orchid">{{$outer.$index}}</b>行</td>
+            </tr>
+        </table>
     </body>
 </html>
